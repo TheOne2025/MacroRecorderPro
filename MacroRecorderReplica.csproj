@@ -6,8 +6,5 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Page Include="SaveMacroWindow.xaml" />
-  </ItemGroup>
 
 </Project>
