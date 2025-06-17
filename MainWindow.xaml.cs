@@ -105,5 +105,12 @@ namespace MacroRecorderReplica
         {
             Close();
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            timer.Stop();
+            timer.Dispose();
+            base.OnClosed(e);
+        }
     }
 }
