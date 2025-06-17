@@ -1,5 +1,5 @@
 using System;
-using System.Timers;
+using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,7 +8,7 @@ namespace MacroRecorderReplica
 {
     public partial class MainWindow : Window
     {
-        private Timer timer;
+        private readonly DispatcherTimer timer;
         private int seconds = 0;
         private int events = 0;
         private double size = 0;
@@ -18,8 +18,9 @@ namespace MacroRecorderReplica
         public MainWindow()
         {
             InitializeComponent();
-            timer = new Timer(1000);
-            timer.Elapsed += Timer_Elapsed;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
         }
 
         private void StartRecording_Click(object sender, RoutedEventArgs e)
@@ -71,7 +72,7 @@ namespace MacroRecorderReplica
             MessageBox.Show("Macro guardada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             if (!isPaused)
             {
@@ -82,12 +83,9 @@ namespace MacroRecorderReplica
                     size += new Random().NextDouble() * 0.5;
                 }
 
-                Dispatcher.Invoke(() =>
-                {
-                    TimeDisplay.Text = TimeSpan.FromSeconds(seconds).ToString(@"hh\:mm\:ss");
-                    EventDisplay.Text = events.ToString();
-                    SizeDisplay.Text = $"{size:F1} KB";
-                });
+                TimeDisplay.Text = TimeSpan.FromSeconds(seconds).ToString(@"hh\:mm\:ss");
+                EventDisplay.Text = events.ToString();
+                SizeDisplay.Text = $"{size:F1} KB";
             }
         }
 
