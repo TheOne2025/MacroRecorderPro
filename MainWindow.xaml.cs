@@ -36,6 +36,7 @@ namespace MacroRecorderReplica
                 timer.Start();
                 RecordButton.Content = "Detener";
                 PauseButton.IsEnabled = true;
+                StopButton.IsEnabled = true;
             }
             else
             {
@@ -50,6 +51,11 @@ namespace MacroRecorderReplica
             StatusText.Text = isPaused ? "Pausado" : "Grabando...";
         }
 
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            StopRecording();
+        }
+
         private void StopRecording()
         {
             isRecording = false;
@@ -58,8 +64,11 @@ namespace MacroRecorderReplica
             RecordButton.Content = "Iniciar Grabación";
             PauseButton.Content = "Pausar";
             PauseButton.IsEnabled = false;
+            StopButton.IsEnabled = false;
             StatusText.Text = "Grabación detenida.";
             StatusIndicator.Fill = Brushes.Green;
+
+            MessageBox.Show("Macro guardada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
