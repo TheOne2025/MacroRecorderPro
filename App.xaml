@@ -3,6 +3,109 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!-- Colores principales tomados de MacroRecorderPro.html -->
+        <!-- Valores de Color para poder usarlos en gradientes -->
+        <Color x:Key="PrimaryColor">#FF2563EB</Color>
+        <Color x:Key="PrimaryDarkColor">#FF1D4ED8</Color>
+        <Color x:Key="PrimaryLightColor">#FF3B82F6</Color>
+        <Color x:Key="SecondaryColor">#FF64748B</Color>
+        <Color x:Key="SuccessColor">#FF16A34A</Color>
+        <Color x:Key="DangerColor">#FFDC2626</Color>
+        <Color x:Key="BackgroundDarkColor">#FF0F172A</Color>
+        <Color x:Key="BackgroundLightColor">#FF1E293B</Color>
+        <Color x:Key="BorderColorColor">#FF334155</Color>
+        <Color x:Key="TextColorColor">#FFF1F5F9</Color>
+        <Color x:Key="TextSecondaryColor">#FF94A3B8</Color>
 
+        <!-- Brushes basadas en los colores anteriores -->
+        <SolidColorBrush x:Key="Primary" Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush x:Key="PrimaryDark" Color="{StaticResource PrimaryDarkColor}"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="{StaticResource PrimaryLightColor}"/>
+        <SolidColorBrush x:Key="Secondary" Color="{StaticResource SecondaryColor}"/>
+        <SolidColorBrush x:Key="Success" Color="{StaticResource SuccessColor}"/>
+        <SolidColorBrush x:Key="Danger" Color="{StaticResource DangerColor}"/>
+        <SolidColorBrush x:Key="BackgroundDark" Color="{StaticResource BackgroundDarkColor}"/>
+        <SolidColorBrush x:Key="BackgroundLight" Color="{StaticResource BackgroundLightColor}"/>
+        <SolidColorBrush x:Key="BorderColor" Color="{StaticResource BorderColorColor}"/>
+        <SolidColorBrush x:Key="TextColor" Color="{StaticResource TextColorColor}"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="{StaticResource TextSecondaryColor}"/>
+
+        <!-- Estilo genérico para botones redondeados -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource Primary}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para botones principales, similares a los de la plantilla HTML -->
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource RoundedButton}">
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+
+        <!-- Estilos de controles de ventana -->
+        <Style x:Key="WindowControlButton" TargetType="Button" BasedOn="{StaticResource RoundedButton}">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="6" Background="{TemplateBinding Background}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MinimizeControl" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Background" Value="#fbbf24"/>
+        </Style>
+        <Style x:Key="MaximizeControl" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Background" Value="#34d399"/>
+        </Style>
+        <Style x:Key="CloseControl" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Background" Value="#f87171"/>
+        </Style>
+
+        <!-- Estilo para pestañas -->
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd" BorderThickness="0,0,0,2" BorderBrush="Transparent" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#2a52e525"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Primary}"/>
+                                <Setter Property="Foreground" Value="{StaticResource Primary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

@@ -1,0 +1,27 @@
+<Window x:Class="MacroRecorderReplica.SaveMacroWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Guardar Macro" Height="400" Width="450" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Border Background="{StaticResource BackgroundLight}" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Padding="20">
+        <StackPanel>
+            <TextBlock Text="Nombre del archivo" Foreground="{StaticResource TextColor}"/>
+            <TextBox x:Name="FileNameBox" Margin="0,5,0,10"/>
+            <TextBlock Text="Descripción" Foreground="{StaticResource TextColor}"/>
+            <TextBox x:Name="DescriptionBox" Margin="0,5,0,10" AcceptsReturn="True" Height="60"/>
+            <TextBlock Text="Categoría" Foreground="{StaticResource TextColor}"/>
+            <ComboBox x:Name="CategoryBox" Margin="0,5,0,10">
+                <ComboBoxItem>Automatización Web</ComboBoxItem>
+                <ComboBoxItem>Entrada de Datos</ComboBoxItem>
+                <ComboBoxItem>Testing</ComboBoxItem>
+                <ComboBoxItem>Procesos de Sistema</ComboBoxItem>
+                <ComboBoxItem>Personalizado</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Etiquetas" Foreground="{StaticResource TextColor}"/>
+            <TextBox x:Name="TagsBox" Margin="0,5,0,20"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                <Button Content="Guardar" Style="{StaticResource ActionButton}" Click="Save_Click"/>
+                <Button Content="Cancelar" Style="{StaticResource ActionButton}" Background="{StaticResource Secondary}" Click="Cancel_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

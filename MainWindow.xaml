@@ -2,53 +2,213 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Macro Recorder Professional" Height="750" Width="520"
-        WindowStyle="None" ResizeMode="NoResize" Background="#0f172a">
-    <Border CornerRadius="12" BorderBrush="#334155" BorderThickness="1" Background="#1e293b">
+        WindowStyle="None" ResizeMode="NoResize" Background="{StaticResource BackgroundDark}">
+    <Border CornerRadius="12" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Background="{StaticResource BackgroundLight}">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.5" Direction="270" ShadowDepth="5"/>
+        </Border.Effect>
         <DockPanel>
-            <StackPanel Orientation="Horizontal" Background="#1d4ed8" Height="50" DockPanel.Dock="Top">
+            <!-- Encabezado -->
+            <Grid Height="50" DockPanel.Dock="Top">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="{StaticResource PrimaryDarkColor}" Offset="0"/>
+                        <GradientStop Color="{StaticResource PrimaryColor}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="⚡ Macro Recorder Professional" VerticalAlignment="Center" Foreground="White"
                            FontWeight="Bold" Margin="20,0,0,0" FontSize="16"/>
-            </StackPanel>
-
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <!-- Estado -->
-                <Border Grid.Row="0" Background="#0f172a" Margin="0,0,0,10" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="10">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="StatusText" Text="Sistema listo para grabar." Foreground="#f1f5f9"/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Botones -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                    <Button x:Name="RecordButton" Content="Iniciar Grabación" Width="150" Margin="5" Click="StartRecording_Click"
-                            Background="#2563eb" Foreground="White" FontWeight="Bold"/>
-                    <Button x:Name="PauseButton" Content="Pausar" Width="100" Margin="5" Click="PauseRecording_Click"
-                            Background="#64748b" Foreground="White" FontWeight="Bold" IsEnabled="False"/>
-                </StackPanel>
-
-                <!-- Stats -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Tiempo" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="TimeDisplay" Text="00:00:00" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Eventos" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="EventDisplay" Text="0" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Tamaño" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="SizeDisplay" Text="0 KB" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <TextBlock Text="v2.5.0 Enterprise" Foreground="White" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                    <Button Style="{StaticResource MinimizeControl}" Click="Minimize_Click"/>
+                    <Button Style="{StaticResource MaximizeControl}" Click="Maximize_Click"/>
+                    <Button Style="{StaticResource CloseControl}" Click="Close_Click"/>
                 </StackPanel>
             </Grid>
+
+            <!-- Contenido principal en pestañas -->
+            <TabControl Background="{StaticResource BackgroundLight}" Foreground="{StaticResource TextColor}" BorderThickness="0">
+                <!-- Pestaña de Grabación -->
+                <TabItem Header="Grabación">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Estado -->
+                        <Border Grid.Row="0" Background="{StaticResource BackgroundDark}" Margin="0,0,0,10" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="8" Padding="10">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="StatusText" Text="Sistema listo para grabar." Foreground="{StaticResource TextColor}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Opciones de grabación -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,10">
+                            <CheckBox Content="Grabar movimientos del ratón" IsChecked="True" Foreground="{StaticResource TextColor}" Margin="0,2"/>
+                            <CheckBox Content="Grabar clics del ratón" IsChecked="True" Foreground="{StaticResource TextColor}" Margin="0,2"/>
+                            <CheckBox Content="Grabar pulsaciones de teclado" IsChecked="True" Foreground="{StaticResource TextColor}" Margin="0,2"/>
+                            <CheckBox Content="Grabar desplazamiento" Foreground="{StaticResource TextColor}" Margin="0,2"/>
+                        </StackPanel>
+
+                        <!-- Botones -->
+                        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,10">
+                            <Button x:Name="RecordButton" Content="Iniciar Grabación" Style="{StaticResource ActionButton}" Click="StartRecording_Click"/>
+                            <Button x:Name="PauseButton" Content="Pausar" Style="{StaticResource ActionButton}" Background="{StaticResource Secondary}" IsEnabled="False" Click="PauseRecording_Click"/>
+                            <Button x:Name="StopButton" Content="Detener" Style="{StaticResource ActionButton}" Background="{StaticResource Danger}" IsEnabled="False" Click="StopButton_Click"/>
+                        </StackPanel>
+
+                        <!-- Estadísticas -->
+                        <UniformGrid Grid.Row="3" Columns="3" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Tiempo" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TimeDisplay" Text="00:00:00" Foreground="{StaticResource PrimaryLight}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Eventos" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="EventDisplay" Text="0" Foreground="{StaticResource PrimaryLight}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Tamaño" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="SizeDisplay" Text="0 KB" Foreground="{StaticResource PrimaryLight}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <!-- Atajos -->
+                        <Border Grid.Row="4" Background="{StaticResource BackgroundDark}" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Atajos de Teclado" Foreground="{StaticResource TextColor}" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock Text="F9 - Iniciar/Detener Grabación" Foreground="{StaticResource TextColor}" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="F10 - Pausar/Reanudar" Foreground="{StaticResource TextColor}" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="F11 - Reproducir Última Macro" Foreground="{StaticResource TextColor}" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="ESC - Cancelar Operación" Foreground="{StaticResource TextColor}" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- Pestaña de Reproducción -->
+                <TabItem Header="Reproducción">
+                    <StackPanel Margin="20" HorizontalAlignment="Stretch">
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Velocidad de Reproducción" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <Slider x:Name="SpeedSlider" Minimum="0.25" Maximum="4" Value="1" TickFrequency="0.25" IsSnapToTickEnabled="True"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+                            <TextBlock Text="Repeticiones:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="RepeatCountBox" Width="60" Text="1"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+                            <TextBlock Text="Retardo (s):" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="RepeatDelayBox" Width="60" Text="0"/>
+                        </StackPanel>
+                        <CheckBox x:Name="DebugModeCheckBox" Content="Modo de depuración" Foreground="{StaticResource TextColor}" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,10" HorizontalAlignment="Center">
+                            <Button Content="Reproducir Macro Seleccionada" Style="{StaticResource ActionButton}" Background="{StaticResource Success}" Click="PlayMacro_Click"/>
+                            <Button Content="Programar Ejecución" Style="{StaticResource ActionButton}" Background="{StaticResource Secondary}" Click="ScheduleMacro_Click"/>
+                        </StackPanel>
+                        <TextBlock Text="Macros Recientes" Foreground="{StaticResource TextColor}" Margin="0,10,0,5" FontWeight="Bold"/>
+                        <ListBox x:Name="RecentMacroList" Height="200">
+                            <ListBoxItem>Proceso_Login_Sistema</ListBoxItem>
+                            <ListBoxItem>Formulario_Datos_Cliente</ListBoxItem>
+                        </ListBox>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Pestaña Biblioteca -->
+                <TabItem Header="Biblioteca">
+                    <StackPanel Margin="20">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Button Content="Importar Macro" Width="120" Margin="0,0,10,0" Style="{StaticResource RoundedButton}" Background="{StaticResource Secondary}" Click="ImportMacro_Click"/>
+                            <Button Content="Exportar Seleccionadas" Width="160" Style="{StaticResource RoundedButton}" Background="{StaticResource Secondary}" Click="ExportMacro_Click"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Buscar en biblioteca" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <TextBox x:Name="SearchBox"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Filtrar por categoría" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="CategoryFilter">
+                                <ComboBoxItem>Todas las categorías</ComboBoxItem>
+                                <ComboBoxItem>Automatización Web</ComboBoxItem>
+                                <ComboBoxItem>Entrada de Datos</ComboBoxItem>
+                                <ComboBoxItem>Testing</ComboBoxItem>
+                                <ComboBoxItem>Procesos de Sistema</ComboBoxItem>
+                                <ComboBoxItem>Personalizado</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <TextBlock Text="Biblioteca de Macros" Foreground="{StaticResource TextColor}" Margin="0,0,0,5" FontWeight="Bold"/>
+                        <ListBox x:Name="MacroList" Height="300">
+                            <ListBoxItem>Web_Scraping_Datos</ListBoxItem>
+                            <ListBoxItem>Excel_Procesamiento_Datos</ListBoxItem>
+                            <ListBoxItem>Sistema_Backup_Archivos</ListBoxItem>
+                        </ListBox>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Pestaña Configuración -->
+                <TabItem Header="Configuración">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="20">
+                            <TextBlock Text="Configuración General" Foreground="{StaticResource TextColor}" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <CheckBox Content="Iniciar con Windows" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <CheckBox Content="Minimizar a la bandeja del sistema" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <CheckBox Content="Mostrar notificaciones" Foreground="{StaticResource TextColor}" Margin="0,0,0,5"/>
+                            <CheckBox Content="Sonidos del sistema" Foreground="{StaticResource TextColor}" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Configuración de Grabación" Foreground="{StaticResource TextColor}" FontWeight="Bold" Margin="10,10,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Calidad de captura:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="CaptureQualityCombo" Width="200">
+                                    <ComboBoxItem>Alta precisión (recomendado)</ComboBoxItem>
+                                    <ComboBoxItem>Precisión media</ComboBoxItem>
+                                    <ComboBoxItem>Baja precisión (mejor rendimiento)</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Formato de archivo:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="FileFormatCombo" Width="200">
+                                    <ComboBoxItem>.mrp (Macro Recorder Pro)</ComboBoxItem>
+                                    <ComboBoxItem>.json (Universal)</ComboBoxItem>
+                                    <ComboBoxItem>.xml (Compatible)</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="Directorio de guardado:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBox x:Name="SaveDirectory" Width="250" Text="C:\Users\Usuario\Documents\Macros" IsReadOnly="True"/>
+                                <Button Content="..." Width="30" Margin="5,0,0,0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Atajos de Teclado" Foreground="{StaticResource TextColor}" FontWeight="Bold" Margin="10,10,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Iniciar/Detener grabación:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBox Width="80" Text="F9" IsReadOnly="True"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Pausar/Reanudar:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBox Width="80" Text="F10" IsReadOnly="True"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="Reproducir última macro:" Foreground="{StaticResource TextColor}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBox Width="80" Text="F11" IsReadOnly="True"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Vertical" Margin="0,10,0,0" HorizontalAlignment="Left">
+                                <Button Content="Guardar Configuración" Style="{StaticResource ActionButton}" Click="SaveSettings_Click"/>
+                                <Button Content="Restablecer Valores" Style="{StaticResource ActionButton}" Background="{StaticResource Secondary}" Click="ResetSettings_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
         </DockPanel>
     </Border>
 </Window>
