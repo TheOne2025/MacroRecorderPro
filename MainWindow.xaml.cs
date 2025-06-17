@@ -14,6 +14,8 @@ namespace MacroRecorderReplica
         private double size = 0;
         private bool isRecording = false;
         private bool isPaused = false;
+        private readonly Random random = new();
+        private readonly object randomLock = new();
 
         public MainWindow()
         {
@@ -76,10 +78,13 @@ namespace MacroRecorderReplica
             if (!isPaused)
             {
                 seconds++;
-                if (new Random().NextDouble() > 0.5)
+                lock (randomLock)
                 {
-                    events += new Random().Next(1, 5);
-                    size += new Random().NextDouble() * 0.5;
+                    if (random.NextDouble() > 0.5)
+                    {
+                        events += random.Next(1, 5);
+                        size += random.NextDouble() * 0.5;
+                    }
                 }
 
                 Dispatcher.Invoke(() =>
