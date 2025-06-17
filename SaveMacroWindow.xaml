@@ -18,9 +18,9 @@
             </ComboBox>
             <TextBlock Text="Etiquetas" Foreground="{StaticResource TextColor}"/>
             <TextBox x:Name="TagsBox" Margin="0,5,0,20"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Guardar" Width="100" Margin="0,0,10,0" Style="{StaticResource RoundedButton}" Click="Save_Click"/>
-                <Button Content="Cancelar" Width="100" Style="{StaticResource RoundedButton}" Background="{StaticResource Secondary}" Click="Cancel_Click"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                <Button Content="Guardar" Style="{StaticResource ActionButton}" Click="Save_Click"/>
+                <Button Content="Cancelar" Style="{StaticResource ActionButton}" Background="{StaticResource Secondary}" Click="Cancel_Click"/>
             </StackPanel>
         </StackPanel>
     </Border>

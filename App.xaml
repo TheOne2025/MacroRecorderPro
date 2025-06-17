@@ -51,6 +51,14 @@
             </Setter>
         </Style>
 
+        <!-- Estilo para botones principales, similares a los de la plantilla HTML -->
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource RoundedButton}">
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+
         <!-- Estilos de controles de ventana -->
         <Style x:Key="WindowControlButton" TargetType="Button" BasedOn="{StaticResource RoundedButton}">
             <Setter Property="Width" Value="12"/>
