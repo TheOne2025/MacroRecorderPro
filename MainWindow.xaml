@@ -12,8 +12,8 @@
             <Grid Height="50" DockPanel.Dock="Top">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="{StaticResource PrimaryDark}" Offset="0"/>
-                        <GradientStop Color="{StaticResource Primary}" Offset="1"/>
+                        <GradientStop Color="{StaticResource PrimaryDarkColor}" Offset="0"/>
+                        <GradientStop Color="{StaticResource PrimaryColor}" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
                 <Grid.ColumnDefinitions>

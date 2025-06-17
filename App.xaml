@@ -4,17 +4,31 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Colores principales tomados de MacroRecorderPro.html -->
-        <SolidColorBrush x:Key="Primary" Color="#2563eb"/>
-        <SolidColorBrush x:Key="PrimaryDark" Color="#1d4ed8"/>
-        <SolidColorBrush x:Key="PrimaryLight" Color="#3b82f6"/>
-        <SolidColorBrush x:Key="Secondary" Color="#64748b"/>
-        <SolidColorBrush x:Key="Success" Color="#16a34a"/>
-        <SolidColorBrush x:Key="Danger" Color="#dc2626"/>
-        <SolidColorBrush x:Key="BackgroundDark" Color="#0f172a"/>
-        <SolidColorBrush x:Key="BackgroundLight" Color="#1e293b"/>
-        <SolidColorBrush x:Key="BorderColor" Color="#334155"/>
-        <SolidColorBrush x:Key="TextColor" Color="#f1f5f9"/>
-        <SolidColorBrush x:Key="TextSecondary" Color="#94a3b8"/>
+        <!-- Valores de Color para poder usarlos en gradientes -->
+        <Color x:Key="PrimaryColor">#FF2563EB</Color>
+        <Color x:Key="PrimaryDarkColor">#FF1D4ED8</Color>
+        <Color x:Key="PrimaryLightColor">#FF3B82F6</Color>
+        <Color x:Key="SecondaryColor">#FF64748B</Color>
+        <Color x:Key="SuccessColor">#FF16A34A</Color>
+        <Color x:Key="DangerColor">#FFDC2626</Color>
+        <Color x:Key="BackgroundDarkColor">#FF0F172A</Color>
+        <Color x:Key="BackgroundLightColor">#FF1E293B</Color>
+        <Color x:Key="BorderColorColor">#FF334155</Color>
+        <Color x:Key="TextColorColor">#FFF1F5F9</Color>
+        <Color x:Key="TextSecondaryColor">#FF94A3B8</Color>
+
+        <!-- Brushes basadas en los colores anteriores -->
+        <SolidColorBrush x:Key="Primary" Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush x:Key="PrimaryDark" Color="{StaticResource PrimaryDarkColor}"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="{StaticResource PrimaryLightColor}"/>
+        <SolidColorBrush x:Key="Secondary" Color="{StaticResource SecondaryColor}"/>
+        <SolidColorBrush x:Key="Success" Color="{StaticResource SuccessColor}"/>
+        <SolidColorBrush x:Key="Danger" Color="{StaticResource DangerColor}"/>
+        <SolidColorBrush x:Key="BackgroundDark" Color="{StaticResource BackgroundDarkColor}"/>
+        <SolidColorBrush x:Key="BackgroundLight" Color="{StaticResource BackgroundLightColor}"/>
+        <SolidColorBrush x:Key="BorderColor" Color="{StaticResource BorderColorColor}"/>
+        <SolidColorBrush x:Key="TextColor" Color="{StaticResource TextColorColor}"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="{StaticResource TextSecondaryColor}"/>
 
         <!-- Estilo genérico para botones redondeados -->
         <Style x:Key="RoundedButton" TargetType="Button">
