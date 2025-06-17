@@ -6,10 +6,20 @@
     <Border CornerRadius="12" BorderBrush="#334155" BorderThickness="1" Background="#1e293b">
         <DockPanel>
             <!-- Encabezado -->
-            <StackPanel Orientation="Horizontal" Background="#1d4ed8" Height="50" DockPanel.Dock="Top">
+            <Grid Background="#1d4ed8" Height="50" DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="⚡ Macro Recorder Professional" VerticalAlignment="Center" Foreground="White"
                            FontWeight="Bold" Margin="20,0,0,0" FontSize="16"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <TextBlock Text="v2.5.0 Enterprise" Foreground="White" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                    <Button Content="_" Width="20" Height="20" Margin="0,0,4,0" Click="Minimize_Click"/>
+                    <Button Content="☐" Width="20" Height="20" Margin="0,0,4,0" Click="Maximize_Click"/>
+                    <Button Content="X" Width="20" Height="20" Background="#dc2626" Foreground="White" Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
 
             <!-- Contenido principal en pestañas -->
             <TabControl Background="#1e293b" Foreground="#f1f5f9" BorderThickness="0">
@@ -17,6 +27,7 @@
                 <TabItem Header="Grabación">
                     <Grid Margin="20">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -50,20 +61,31 @@
                         </StackPanel>
 
                         <!-- Estadísticas -->
-                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-                            <StackPanel Margin="20,0">
+                        <UniformGrid Grid.Row="3" Columns="3" Margin="0,10,0,0">
+                            <StackPanel>
                                 <TextBlock Text="Tiempo" Foreground="#94a3b8" HorizontalAlignment="Center"/>
                                 <TextBlock x:Name="TimeDisplay" Text="00:00:00" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <StackPanel Margin="20,0">
+                            <StackPanel>
                                 <TextBlock Text="Eventos" Foreground="#94a3b8" HorizontalAlignment="Center"/>
                                 <TextBlock x:Name="EventDisplay" Text="0" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <StackPanel Margin="20,0">
+                            <StackPanel>
                                 <TextBlock Text="Tamaño" Foreground="#94a3b8" HorizontalAlignment="Center"/>
                                 <TextBlock x:Name="SizeDisplay" Text="0 KB" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
                             </StackPanel>
-                        </StackPanel>
+                        </UniformGrid>
+
+                        <!-- Atajos -->
+                        <Border Grid.Row="4" Background="#0f172a" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Atajos de Teclado" Foreground="#f1f5f9" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock Text="F9 - Iniciar/Detener Grabación" Foreground="#f1f5f9" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="F10 - Pausar/Reanudar" Foreground="#f1f5f9" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="F11 - Reproducir Última Macro" Foreground="#f1f5f9" FontSize="12" Margin="0,0,0,2"/>
+                                <TextBlock Text="ESC - Cancelar Operación" Foreground="#f1f5f9" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
                 </TabItem>
 
