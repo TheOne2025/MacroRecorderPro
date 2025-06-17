@@ -68,7 +68,11 @@ namespace MacroRecorderReplica
             StatusText.Text = "Grabación detenida.";
             StatusIndicator.Fill = Brushes.Green;
 
-            MessageBox.Show("Macro guardada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            var saveWindow = new SaveMacroWindow { Owner = this };
+            if (saveWindow.ShowDialog() == true)
+            {
+                MessageBox.Show($"Macro guardada: {saveWindow.FileName}.mrp", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
