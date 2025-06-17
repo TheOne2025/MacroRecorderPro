@@ -5,50 +5,103 @@
         WindowStyle="None" ResizeMode="NoResize" Background="#0f172a">
     <Border CornerRadius="12" BorderBrush="#334155" BorderThickness="1" Background="#1e293b">
         <DockPanel>
+            <!-- Encabezado -->
             <StackPanel Orientation="Horizontal" Background="#1d4ed8" Height="50" DockPanel.Dock="Top">
                 <TextBlock Text="⚡ Macro Recorder Professional" VerticalAlignment="Center" Foreground="White"
                            FontWeight="Bold" Margin="20,0,0,0" FontSize="16"/>
             </StackPanel>
 
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <!-- Contenido principal en pestañas -->
+            <TabControl Background="#1e293b" Foreground="#f1f5f9" BorderThickness="0">
+                <!-- Pestaña de Grabación -->
+                <TabItem Header="Grabación">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                <!-- Estado -->
-                <Border Grid.Row="0" Background="#0f172a" Margin="0,0,0,10" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="10">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="StatusText" Text="Sistema listo para grabar." Foreground="#f1f5f9"/>
-                    </StackPanel>
-                </Border>
+                        <!-- Estado -->
+                        <Border Grid.Row="0" Background="#0f172a" Margin="0,0,0,10" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="10">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="StatusText" Text="Sistema listo para grabar." Foreground="#f1f5f9"/>
+                            </StackPanel>
+                        </Border>
 
-                <!-- Botones -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                    <Button x:Name="RecordButton" Content="Iniciar Grabación" Width="150" Margin="5" Click="StartRecording_Click"
-                            Background="#2563eb" Foreground="White" FontWeight="Bold"/>
-                    <Button x:Name="PauseButton" Content="Pausar" Width="100" Margin="5" Click="PauseRecording_Click"
-                            Background="#64748b" Foreground="White" FontWeight="Bold" IsEnabled="False"/>
-                </StackPanel>
+                        <!-- Opciones de grabación -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,10">
+                            <CheckBox Content="Grabar movimientos del ratón" IsChecked="True" Foreground="#f1f5f9" Margin="0,2"/>
+                            <CheckBox Content="Grabar clics del ratón" IsChecked="True" Foreground="#f1f5f9" Margin="0,2"/>
+                            <CheckBox Content="Grabar pulsaciones de teclado" IsChecked="True" Foreground="#f1f5f9" Margin="0,2"/>
+                            <CheckBox Content="Grabar desplazamiento" Foreground="#f1f5f9" Margin="0,2"/>
+                        </StackPanel>
 
-                <!-- Stats -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Tiempo" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="TimeDisplay" Text="00:00:00" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <!-- Botones -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                            <Button x:Name="RecordButton" Content="Iniciar Grabación" Width="140" Margin="5" Click="StartRecording_Click"
+                                    Background="#2563eb" Foreground="White" FontWeight="Bold"/>
+                            <Button x:Name="PauseButton" Content="Pausar" Width="100" Margin="5" Click="PauseRecording_Click"
+                                    Background="#64748b" Foreground="White" FontWeight="Bold" IsEnabled="False"/>
+                            <Button x:Name="StopButton" Content="Detener" Width="100" Margin="5" Click="StopButton_Click"
+                                    Background="#dc2626" Foreground="White" FontWeight="Bold" IsEnabled="False"/>
+                        </StackPanel>
+
+                        <!-- Estadísticas -->
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                            <StackPanel Margin="20,0">
+                                <TextBlock Text="Tiempo" Foreground="#94a3b8" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TimeDisplay" Text="00:00:00" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Margin="20,0">
+                                <TextBlock Text="Eventos" Foreground="#94a3b8" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="EventDisplay" Text="0" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Margin="20,0">
+                                <TextBlock Text="Tamaño" Foreground="#94a3b8" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="SizeDisplay" Text="0 KB" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <!-- Pestaña de Reproducción -->
+                <TabItem Header="Reproducción">
+                    <StackPanel Margin="20" HorizontalAlignment="Stretch">
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Velocidad de Reproducción" Foreground="#f1f5f9" Margin="0,0,0,5"/>
+                            <Slider x:Name="SpeedSlider" Minimum="0.25" Maximum="4" Value="1" TickFrequency="0.25" IsSnapToTickEnabled="True"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+                            <TextBlock Text="Repeticiones:" Foreground="#f1f5f9" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="RepeatCountBox" Width="60" Text="1"/>
+                        </StackPanel>
+                        <Button Content="Reproducir Macro" Width="180" Height="40" Background="#16a34a" Foreground="White"/>
                     </StackPanel>
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Eventos" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="EventDisplay" Text="0" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </TabItem>
+
+                <!-- Pestaña Biblioteca -->
+                <TabItem Header="Biblioteca">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Biblioteca de macros" Foreground="#f1f5f9" Margin="0,0,0,10"/>
+                        <ListBox x:Name="MacroList" Height="400">
+                            <ListBoxItem>Proceso_Login_Sistema</ListBoxItem>
+                            <ListBoxItem>Formulario_Datos_Cliente</ListBoxItem>
+                        </ListBox>
                     </StackPanel>
-                    <StackPanel Margin="20,0">
-                        <TextBlock Text="Tamaño" Foreground="#94a3b8" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="SizeDisplay" Text="0 KB" Foreground="#3b82f6" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </TabItem>
+
+                <!-- Pestaña Configuración -->
+                <TabItem Header="Configuración">
+                    <StackPanel Margin="20">
+                        <CheckBox Content="Iniciar con Windows" Foreground="#f1f5f9" Margin="0,0,0,10"/>
+                        <CheckBox Content="Mostrar notificaciones" Foreground="#f1f5f9" Margin="0,0,0,10"/>
+                        <CheckBox Content="Sonidos del sistema" Foreground="#f1f5f9"/>
                     </StackPanel>
-                </StackPanel>
-            </Grid>
+                </TabItem>
+            </TabControl>
         </DockPanel>
     </Border>
 </Window>
