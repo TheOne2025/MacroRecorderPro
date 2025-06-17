@@ -36,6 +36,7 @@ namespace MacroRecorderReplica
                 timer.Start();
                 RecordButton.Content = "Detener";
                 PauseButton.IsEnabled = true;
+                StopButton.IsEnabled = true;
             }
             else
             {
@@ -50,6 +51,11 @@ namespace MacroRecorderReplica
             StatusText.Text = isPaused ? "Pausado" : "Grabando...";
         }
 
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            StopRecording();
+        }
+
         private void StopRecording()
         {
             isRecording = false;
@@ -58,8 +64,11 @@ namespace MacroRecorderReplica
             RecordButton.Content = "Iniciar Grabación";
             PauseButton.Content = "Pausar";
             PauseButton.IsEnabled = false;
+            StopButton.IsEnabled = false;
             StatusText.Text = "Grabación detenida.";
             StatusIndicator.Fill = Brushes.Green;
+
+            MessageBox.Show("Macro guardada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -80,6 +89,51 @@ namespace MacroRecorderReplica
                     SizeDisplay.Text = $"{size:F1} KB";
                 });
             }
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void PlayMacro_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Reproduciendo macro seleccionada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ScheduleMacro_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Programar ejecución no disponible", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ImportMacro_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Función de importar no implementada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExportMacro_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Función de exportar no implementada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void SaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Configuración guardada", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ResetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Valores restablecidos", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
